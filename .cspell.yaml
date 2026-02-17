@@ -13,6 +13,7 @@ words:
   - bashmarks
   - bsky
   - btop
+  - buildx
   - cachix
   - cfargotunnel
   - checkjobs
@@ -23,6 +24,7 @@ words:
   - defterm
   - dircolors
   - direnv
+  - distroless
   - dmarc
   - dmask
   - dnslink
@@ -30,15 +32,19 @@ words:
   - dotenv
   - doujin
   - enableexit
+  - esac
   - extglob
   - fmask
   - frontmost
   - ghcman
   - ghcup
   - gnumake
+  - GOARCH
+  - GOARM
   - googlecode
   - googledomains
   - googlehosted
+  - hatenablog
   - histappend
   - ignoreboth
   - ignoreeof
@@ -66,6 +72,7 @@ words:
   - nixpkgs
   - nocaseglob
   - nofork
+  - nonroot
   - npiperelay
   - nssmdns
   - numtide
@@ -106,13 +113,15 @@ words:
   - usbip
   - vfat
   - virtualisation
+  - vxlan
   - xcape
   - xhci
 useGitignore: true
 ignoreWords:
   - fddo5yuqduqu
+  - ldflags
   - skajdjtjjzil7b
-  - WERGWCBwQpV
+  - wergwcbwqpv
 ignoreRegExpList:
   - "[a-zA-Z0-9]{15,}"
 ignorePaths:
