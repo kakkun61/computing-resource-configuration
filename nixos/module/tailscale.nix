@@ -4,6 +4,7 @@
 # 名前解決ができなくなるという問題がある
 # 解決策として K3s で --resolv-conf オプションを指定して LAN のネームサーバーを指定する
 # ./kubernetes.nix を参照
+{ lib, ... }:
 {
   services = {
     tailscale = {
@@ -14,6 +15,6 @@
     # > 当社の見解では、systemd-resolvedを使用し、ユーザーフレンドリーなネットワーク設定が必要な場合は、
     # > 最新バージョンのNetworkManager（1.26.6以降）を採用することをお勧めします。
     # https://tailscale.com/blog/sisyphean-dns-client-linux
-    resolved.enable = true;
+    resolved.enable = lib.mkDefault true;
   };
 }
