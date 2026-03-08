@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pdfding
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: pdfding
+  namespace: kube-system
+spec:
+  repo: https://charts.pdfding.com/
+  chart: pdfding
+  version: "0.1.13"
+  targetNamespace: pdfding
+  valuesContent: |-
