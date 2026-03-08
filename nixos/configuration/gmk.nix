@@ -1,7 +1,11 @@
 {
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  imports = [ ./gmk/photo-file-server.nix ];
 
-  networking.hostName = "gmk";
-  networking.wireless.enable = true;
+  config = {
+    boot.loader.systemd-boot.enable = true;
+    boot.loader.efi.canTouchEfiVariables = true;
+
+    networking.hostName = "gmk";
+    networking.wireless.enable = true;
+  };
 }
