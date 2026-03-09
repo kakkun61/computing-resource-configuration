@@ -39,9 +39,10 @@ data:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: feed-trigger-data
+  name: feed-trigger-data-nfs
   namespace: discord-feed-reader
 spec:
+  storageClassName: "nfs-client"
   accessModes:
     - ReadWriteOncePod
   resources:
@@ -54,7 +55,7 @@ metadata:
   name: discord-feed-reader
   namespace: discord-feed-reader
 spec:
-  schedule: "29 * * * *"
+  schedule: "12 * * * *"
   concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 3
@@ -93,4 +94,4 @@ spec:
                 name: discord-feed-post-config
             - name: feed-trigger-data
               persistentVolumeClaim:
-                claimName: feed-trigger-data
+                claimName: feed-trigger-data-nfs
