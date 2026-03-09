@@ -191,7 +191,7 @@ replicas: 1
 ### Enabling this will persist the database and media directories
 persistence:
   enabled: true
-  storageClassName: ""
+  storageClassName: "nfs-client"
   # -- size of the sqlite pv
   dbSize: 500Mi
   # -- size of the media pv
