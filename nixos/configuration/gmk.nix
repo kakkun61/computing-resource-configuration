@@ -1,5 +1,8 @@
 {
-  imports = [ ./gmk/photo-file-server.nix ];
+  imports = [
+    ./gmk/kubernetes-volume-nfs.nix
+    ./gmk/photo-file-server.nix
+  ];
 
   config = {
     boot.loader.systemd-boot.enable = true;
@@ -7,5 +10,19 @@
 
     networking.hostName = "gmk";
     networking.wireless.enable = true;
+
+    fileSystems."/mnt/usb-raid" = {
+      device = "/dev/disk/by-uuid/5444f6b1-a5f9-4fb8-b163-c333986603d4";
+      fsType = "ext4";
+      options = [
+        "defaults"
+        # デバイスが見つからなくても起動失敗にしない。
+        "nofail"
+        # 起動直後ではなく初回アクセス時に自動マウントする。
+        "x-systemd.automount"
+        # ブロックデバイスの出現待ち時間を制限する。
+        "x-systemd.device-timeout=10"
+      ];
+    };
   };
 }
