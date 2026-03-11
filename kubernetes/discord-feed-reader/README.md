@@ -4,7 +4,7 @@ discord-feed-post 用の設定ファイルが要る。Discord のウェブフッ
 
 ```yaml
 apiVersion: v1
-kind: ConfigMap
+kind: Secret
 metadata:
   name: discord-feed-post-config
   namespace: discord-feed-reader

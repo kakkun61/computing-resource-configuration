@@ -52,7 +52,7 @@ spec:
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: discord-feed-reader
+  name: job
   namespace: discord-feed-reader
 spec:
   schedule: "12 * * * *"
