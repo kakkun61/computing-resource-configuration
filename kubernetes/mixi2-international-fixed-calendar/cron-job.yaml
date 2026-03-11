@@ -21,7 +21,7 @@ spec:
           restartPolicy: Never
           containers:
             - name: mixi2-international-fixed-calendar
-              image: ghcr.io/kakkun61/mixi2-international-fixed-calendar:release-mixi2-international-fixed-calendar
+              image: ghcr.io/kakkun61/mixi2-international-fixed-calendar:release-mixi2-international-fixed-calendar-2026-03-12-01
               imagePullPolicy: IfNotPresent
               envFrom:
                 - secretRef:
