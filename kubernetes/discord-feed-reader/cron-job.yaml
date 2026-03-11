@@ -33,7 +33,8 @@ data:
       - https://ameblo.jp/aragane-railway/atom.xml
       - https://funafuwa.blog.jp/index.rdf
       - https://rssblog.ameba.jp/elmer-train/rss.html
-      - https://fujigaya2.seesaa.net/index.rdf
+      # なぜかエラー 429 Too Many Requests になる
+      # - https://fujigaya2.seesaa.net/index.rdf
     run: [/usr/local/bin/discord-feed-post]
 ---
 apiVersion: v1
