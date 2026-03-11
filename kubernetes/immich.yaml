@@ -1,0 +1,137 @@
+# This file is generated. Do not edit manually.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: immich
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: immich-library
+  namespace: immich
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Ti
+  storageClassName: nfs-client
+---
+# /mnt/usb-raid/photos を /external-library にマウントするための PersistentVolume
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: immich-external-library-pv
+spec:
+  capacity:
+    storage: 1Ti
+  accessModes:
+    - ReadOnlyMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-client
+  nfs:
+    path: /mnt/usb-raid/photos
+    server: gmk.local.kakkun61.com
+---
+# /mnt/usb-raid/photos を /external-library にマウントするための PersistentVolumeClaim
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: immich-external-library
+  namespace: immich
+spec:
+  accessModes:
+    - ReadOnlyMany
+  resources:
+    requests:
+      storage: 1Ti
+  storageClassName: nfs-client
+  volumeName: immich-external-library-pv
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: database
+  namespace: immich
+spec:
+  instances: 1
+  storage:
+    storageClass: local-path
+    size: 1Gi
+  affinity:
+    nodeSelector:
+      kubernetes.io/hostname: gmk
+  imageName: ghcr.io/tensorchord/cloudnative-vectorchord:16.9-0.4.3
+  postgresql:
+    shared_preload_libraries:
+      - "vchord.so"
+  bootstrap:
+    initdb:
+      database: immich
+      owner: immich
+      secret:
+        name: database-auth
+      postInitApplicationSQL:
+        # Commands based on: https://immich.app/docs/administration/postgres-standalone/#without-superuser-permission
+        - CREATE EXTENSION vchord CASCADE;
+        - CREATE EXTENSION earthdistance CASCADE;
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: immich
+  namespace: kube-system
+spec:
+  chart: oci://ghcr.io/immich-app/immich-charts/immich
+  version: "0.10.3"
+  targetNamespace: immich
+  valuesContent: |-
+    # See https://github.com/immich-app/immich-charts/blob/main/charts/immich/values.yaml
+
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              tag: "v2.5.6"
+            env:
+              DB_HOSTNAME: database-rw
+              DB_USERNAME: immich
+              DB_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: database-auth
+                    key: password
+
+    immich:
+      persistence:
+        library:
+          existingClaim: immich-library
+
+    valkey:
+      enabled: true
+      persistence:
+        data:
+          type: persistentVolumeClaim
+          storageClass: "nfs-client"
+
+    server:
+      persistence:
+        external-library:
+          enabled: true
+          type: persistentVolumeClaim
+          existingClaim: immich-external-library
+          advancedMounts:
+            main:
+              main:
+                - path: /external-library
+                  readOnly: true
+      ingress:
+        main:
+          enabled: true
+          hosts:
+            - host: "immich.kakkun61.com"
+              paths:
+                - path: "/"
+                  service:
+                    identifier: main

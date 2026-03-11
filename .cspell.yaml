@@ -49,6 +49,7 @@ words:
   - histappend
   - ignoreboth
   - ignoreeof
+  - immich
   - inputmethod
   - iohk
   - iterm

@@ -1,0 +1,18 @@
+# This file is generated. Do not edit manually.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cnpg-system
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: cnpg
+  namespace: kube-system
+spec:
+  repo: https://cloudnative-pg.github.io/charts
+  chart: cloudnative-pg
+  version: "0.27.1"
+  targetNamespace: cnpg-system
+  valuesContent: |-
+    # empty

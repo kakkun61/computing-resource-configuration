@@ -1,5 +1,5 @@
 # See https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner/blob/master/charts/nfs-subdir-external-provisioner/README.md
 
 nfs:
-  server: gmk.local
+  server: gmk.local.kakkun61.com
   path: /mnt/usb-raid/kubernetes

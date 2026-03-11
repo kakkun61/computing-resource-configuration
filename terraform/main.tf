@@ -162,6 +162,15 @@ resource "cloudflare_record" "argocd" {
   proxied = true
 }
 
+resource "cloudflare_record" "immich" {
+  zone_id = var.cloudflare_zone_id
+  name    = "immich"
+  type    = "CNAME"
+  content = "${cloudflare_zero_trust_tunnel_cloudflared.home.id}.cfargotunnel.com"
+  ttl     = 1
+  proxied = true
+}
+
 resource "cloudflare_record" "photo_film_dev" {
   zone_id = var.cloudflare_zone_id
   name    = "photo-film-dev"
@@ -352,6 +361,11 @@ resource "cloudflare_zero_trust_tunnel_cloudflared_config" "home" {
 
     ingress_rule {
       hostname = "argocd.${var.domain}"
+      service  = "http://localhost:80"
+    }
+
+    ingress_rule {
+      hostname = "immich.${var.domain}"
       service  = "http://localhost:80"
     }
 

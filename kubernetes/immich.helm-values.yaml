@@ -1,0 +1,49 @@
+# See https://github.com/immich-app/immich-charts/blob/main/charts/immich/values.yaml
+
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          tag: "v2.5.6"
+        env:
+          DB_HOSTNAME: database-rw
+          DB_USERNAME: immich
+          DB_PASSWORD:
+            valueFrom:
+              secretKeyRef:
+                name: database-auth
+                key: password
+
+immich:
+  persistence:
+    library:
+      existingClaim: immich-library
+
+valkey:
+  enabled: true
+  persistence:
+    data:
+      type: persistentVolumeClaim
+      storageClass: "nfs-client"
+
+server:
+  persistence:
+    external-library:
+      enabled: true
+      type: persistentVolumeClaim
+      existingClaim: immich-external-library
+      advancedMounts:
+        main:
+          main:
+            - path: /external-library
+              readOnly: true
+  ingress:
+    main:
+      enabled: true
+      hosts:
+        - host: "immich.kakkun61.com"
+          paths:
+            - path: "/"
+              service:
+                identifier: main
