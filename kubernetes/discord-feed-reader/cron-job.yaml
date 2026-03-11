@@ -67,7 +67,7 @@ spec:
           restartPolicy: Never
           containers:
             - name: discord-feed-reader
-              image: ghcr.io/kakkun61/computing-resource-configuration:discord-feed-reader
+              image: ghcr.io/kakkun61/discord-feed-reader:release-discord-feed-reader
               imagePullPolicy: IfNotPresent
               resources:
                 requests:
