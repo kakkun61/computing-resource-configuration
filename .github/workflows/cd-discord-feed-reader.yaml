@@ -5,6 +5,8 @@ on:
       - release-*
     paths:
       - 'kubernetes/discord-feed-reader/**'
+    tags:
+      - release-*
 
 env:
   REGISTRY: ghcr.io

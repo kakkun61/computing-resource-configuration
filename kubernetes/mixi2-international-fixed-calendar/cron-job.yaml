@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: mixi2-international-fixed-calendar
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: job
+  namespace: mixi2-international-fixed-calendar
+spec:
+  schedule: "0 7 * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: mixi2-international-fixed-calendar
+              image: ghcr.io/kakkun61/mixi2-international-fixed-calendar:release-mixi2-international-fixed-calendar
+              imagePullPolicy: IfNotPresent
+              envFrom:
+                - secretRef:
+                    name: env
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 128Mi
+                limits:
+                  cpu: 500m
+                  memory: 256Mi
