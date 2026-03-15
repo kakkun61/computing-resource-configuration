@@ -47,3 +47,8 @@ server:
             - path: "/"
               service:
                 identifier: main
+        - host: "immich.local.kakkun61.com"
+          paths:
+            - path: "/"
+              service:
+                identifier: main
