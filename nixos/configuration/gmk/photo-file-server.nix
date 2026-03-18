@@ -1,5 +1,5 @@
 {
-  services={
+  services = {
     samba = {
       enable = true;
       openFirewall = true;
@@ -24,21 +24,21 @@
     nfs.server = {
       enable = true;
       exports = ''
-        /mnt/usb-raid/photos *(ro,sync,no_subtree_check)
+        /mnt/usb-raid/photos *(ro,sync,no_subtree_check,no_root_squash)
       '';
     };
+  };
 
-    networking.firewall = {
-      allowedTCPPorts = [
-        111
-        2049
-        20048
-      ];
-      allowedUDPPorts = [
-        111
-        2049
-        20048
-      ];
-    };
+  networking.firewall = {
+    allowedTCPPorts = [
+      111
+      2049
+      20048
+    ];
+    allowedUDPPorts = [
+      111
+      2049
+      20048
+    ];
   };
 }
