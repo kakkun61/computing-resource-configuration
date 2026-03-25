@@ -5,7 +5,7 @@ controllers:
     containers:
       main:
         image:
-          tag: "v2.5.6"
+          tag: "v2.6.2"
         env:
           DB_HOSTNAME: database-rw
           DB_USERNAME: immich
@@ -28,6 +28,19 @@ valkey:
       storageClass: "nfs-client"
 
 server:
+  controllers:
+    main:
+      pod:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: kubernetes.io/arch
+                      operator: In
+                      values:
+                        - amd64
+                        - arm64
   persistence:
     external-library:
       enabled: true
