@@ -21,6 +21,8 @@ words:
   - checkwinsize
   - cleartype
   - cloudflared
+  - cloudnative
+  - cnpg
   - cpuset
   - defterm
   - dircolors
@@ -32,6 +34,7 @@ words:
   - domainkey
   - dotenv
   - doujin
+  - earthdistance
   - enableexit
   - esac
   - extglob
@@ -40,8 +43,8 @@ words:
   - ghcman
   - ghcup
   - gnumake
-  - GOARCH
-  - GOARM
+  - goarch
+  - goarm
   - googlecode
   - googledomains
   - googlehosted
@@ -50,6 +53,7 @@ words:
   - ignoreboth
   - ignoreeof
   - immich
+  - initdb
   - inputmethod
   - iohk
   - iterm
@@ -110,16 +114,21 @@ words:
   - stdenv
   - substituters
   - tailnet
+  - tensorchord
   - thefuck
   - traefik
   - treefmt
   - usbhid
   - usbip
+  - valkey
+  - vchord
+  - vectorchord
   - vfat
   - virtualisation
   - vxlan
   - xcape
   - xhci
+  - yamls
 useGitignore: true
 ignoreWords:
   - fddo5yuqduqu
