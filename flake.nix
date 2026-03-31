@@ -67,7 +67,7 @@
         {
           devShells.default = pkgs.mkShell {
             packages = with pkgs; [ nodejs ];
-          }
+          };
           treefmt.programs = {
             jsonfmt.enable = true;
             nixfmt.enable = true;
