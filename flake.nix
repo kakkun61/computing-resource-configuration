@@ -65,8 +65,19 @@
           ...
         }:
         {
+          _module.args = {
+            pkgs = import nixpkgs {
+              inherit system;
+              config = {
+                allowUnfree = true;
+              };
+            };
+          };
           devShells.default = pkgs.mkShell {
-            packages = with pkgs; [ nodejs ];
+            packages = with pkgs; [
+              nodejs
+              terraform
+            ];
           };
           treefmt.programs = {
             jsonfmt.enable = true;

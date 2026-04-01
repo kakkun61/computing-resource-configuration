@@ -171,6 +171,15 @@ resource "cloudflare_record" "immich" {
   proxied = true
 }
 
+resource "cloudflare_record" "miniflux" {
+  zone_id = var.cloudflare_zone_id
+  name    = "miniflux"
+  type    = "CNAME"
+  content = "${cloudflare_zero_trust_tunnel_cloudflared.home.id}.cfargotunnel.com"
+  ttl     = 1
+  proxied = true
+}
+
 resource "cloudflare_record" "immich_local" {
   zone_id = var.cloudflare_zone_id
   name    = "immich.local"
@@ -375,6 +384,11 @@ resource "cloudflare_zero_trust_tunnel_cloudflared_config" "home" {
 
     ingress_rule {
       hostname = "immich.${var.domain}"
+      service  = "http://localhost:80"
+    }
+
+    ingress_rule {
+      hostname = "miniflux.${var.domain}"
       service  = "http://localhost:80"
     }
 

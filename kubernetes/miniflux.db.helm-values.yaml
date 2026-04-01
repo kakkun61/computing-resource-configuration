@@ -1,0 +1,13 @@
+auth:
+  database: miniflux
+  existingSecret: database
+  secretKeys:
+    adminPasswordKey: password
+image:
+  tag: latest
+persistence:
+  enabled: true
+  size: 8Gi
+primary:
+  nodeSelector:
+    kubernetes.io/arch: amd64
