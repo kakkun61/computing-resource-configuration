@@ -2,6 +2,7 @@
   imports = [
     ./gmk/kubernetes-volume-nfs.nix
     ./gmk/photo-file-server.nix
+    ./gmk/syncthing.nix
   ];
 
   config = {
