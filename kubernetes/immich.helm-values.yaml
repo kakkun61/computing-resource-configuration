@@ -54,6 +54,8 @@ server:
   ingress:
     main:
       enabled: true
+      annotations:
+        traefik.ingress.kubernetes.io/router.middlewares: immich-immich-upload-size@kubernetescrd
       hosts:
         - host: "immich.kakkun61.com"
           paths:

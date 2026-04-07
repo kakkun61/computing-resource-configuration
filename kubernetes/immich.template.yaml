@@ -75,6 +75,19 @@ spec:
         - CREATE EXTENSION vchord CASCADE;
         - CREATE EXTENSION earthdistance CASCADE;
 ---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: immich-upload-size
+  namespace: immich
+spec:
+  buffering:
+    maxRequestBodyBytes: 0 # 制限を無効化
+    maxResponseBodyBytes: 0
+    memRequestBodyBytes: 20971520
+    memResponseBodyBytes: 20971520
+    retryExpression: "IsNetworkError() && Attempts() < 2"
+---
 apiVersion: helm.cattle.io/v1
 kind: HelmChart
 metadata:
