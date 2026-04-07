@@ -1,4 +1,5 @@
-{ config, ... }: {
+{ config, ... }:
+{
   services.syncthing = {
     enable = true;
     guiAddress = "gmk.local.kakkun61.com:8384";

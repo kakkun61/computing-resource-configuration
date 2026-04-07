@@ -35,5 +35,17 @@
         useDefaultShell = true;
       };
     };
+
+    security.sudo.extraRules = [
+      {
+        users = [ "kazuki" ];
+        commands = [
+          {
+            command = "ALL";
+            options = ["NOPASSWD"];
+          }
+        ];
+      }
+    ];
   };
 }
