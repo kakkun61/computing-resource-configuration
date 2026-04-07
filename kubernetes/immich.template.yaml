@@ -81,6 +81,7 @@ metadata:
   name: immich-upload-size
   namespace: immich
 spec:
+  # 参考：https://baerentsen.space/immich-issue/
   buffering:
     maxRequestBodyBytes: 0 # 制限を無効化
     maxResponseBodyBytes: 0

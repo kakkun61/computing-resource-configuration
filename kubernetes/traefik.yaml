@@ -1,0 +1,22 @@
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  # Traefik の readTimeout を 0s （無効）に設定
+  # Immich でサイズの大きなファイルのアップロードがあるため
+  # 参考：https://mhdez.com/notes/fixing-immich-uploads-with-traefik-timeout/
+  valuesContent: |-
+    image:
+      repository: rancher/mirrored-library-traefik
+      tag: "3.6.10"
+    ports:
+      web:
+        transport:
+          respondingTimeouts:
+            readTimeout: "0s"
+      websecure:
+        transport:
+          respondingTimeouts:
+            readTimeout: "0s"
