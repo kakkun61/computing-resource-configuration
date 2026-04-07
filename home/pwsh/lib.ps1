@@ -1,4 +1,4 @@
-Set-StrictMode -Version Latest
+﻿Set-StrictMode -Version Latest
 
 $dotFilesPwshDir = $PSScriptRoot
 if ((Get-Item $PSCommandPath).Target) {
@@ -52,4 +52,16 @@ function Show-Notification {
         [string] $Message
     )
     powershell.exe -ExecutionPolicy Unrestricted -Command "& { . $dotFilesPwshDir\..\lib\toast-in-powershell\toast.ps1; Show-Notification $Title $Message }"
+}
+
+function gpg {
+    param (
+        [Parameter(ValueFromRemainingArguments = $true)]
+        [string[]] $args
+    )
+    # gpg がコードページを 65001 に勝手に変えるため、実行後に元に戻す
+    $originalCodePage = (chcp | ForEach-Object { $_ -match ':\s+(\d+)' | Out-Null; $matches[1] }) -as [int]
+    & gpg.exe @args
+    Read-Host "コードページを ${originalCodePage} に戻します、何かキーを押してください..."
+    chcp $originalCodePage
 }
