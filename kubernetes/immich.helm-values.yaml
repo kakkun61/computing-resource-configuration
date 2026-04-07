@@ -5,7 +5,7 @@ controllers:
     containers:
       main:
         image:
-          tag: "v2.6.2"
+          tag: "v2.6.3"
         env:
           DB_HOSTNAME: database-rw
           DB_USERNAME: immich

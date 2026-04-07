@@ -1,0 +1,12 @@
+# Traefik の readTimeout を 0s （無効）に設定
+# Immich でサイズの大きなファイルのアップロードがあるため
+# 参考：https://mhdez.com/notes/fixing-immich-uploads-with-traefik-timeout/
+ports:
+  web:
+    transport:
+      respondingTimeouts:
+        readTimeout: "0s"
+  websecure:
+    transport:
+      respondingTimeouts:
+        readTimeout: "0s"
