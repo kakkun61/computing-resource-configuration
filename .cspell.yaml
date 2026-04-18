@@ -83,6 +83,7 @@ words:
   - nofail
   - nofork
   - nonroot
+  - NOPASSWD
   - npiperelay
   - nssmdns
   - numtide
