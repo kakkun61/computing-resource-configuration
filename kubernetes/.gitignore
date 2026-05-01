@@ -2,5 +2,4 @@ cloud-native-pg.yaml
 immich.yaml
 nfs-subdir-external-provisioner.yaml
 pdfding.yaml
-miniflux.db.yaml
 traefik.yaml

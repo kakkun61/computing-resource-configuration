@@ -77,6 +77,26 @@ spec:
                   name: database
                   key: password
             - name: DATABASE_URL
-              value: postgres://postgres:$(DATABASE_PASSWORD)@miniflux-postgresql/miniflux?sslmode=disable
+              value: postgres://miniflux:$(DATABASE_PASSWORD)@database-rw/miniflux?sslmode=disable
             - name: RUN_MIGRATIONS
               value: "1"
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: database
+  namespace: miniflux
+spec:
+  instances: 1
+  storage:
+    storageClass: local-path
+    size: 1Gi
+  affinity:
+    nodeSelector:
+      kubernetes.io/hostname: gmk
+  bootstrap:
+    initdb:
+      database: miniflux
+      owner: miniflux
+      secret:
+        name: database
