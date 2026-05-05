@@ -73,6 +73,12 @@
       bash = {
         enable = true;
         bashrcExtra = ''
+          # 非対話シェルなら終了
+          # 非対話シェル = i オプションがない
+          if [[ $- != *i* ]]; then
+            return
+          fi
+
           set -o ignoreeof
         '';
         historyControl = [ "ignoreboth" ];

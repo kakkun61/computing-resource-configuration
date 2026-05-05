@@ -13,15 +13,15 @@
 	autocrlf = false
 	editor = "nano"
 	eof = "lf"
-	pager = "/nix/store/60440kg5c51rrlpinkk2rkg020q5q6kv-git-2.51.0/share/git/contrib/diff-highlight/diff-highlight | /nix/store/pg342gm2b70z9dvs6gbc9i97igcnlw8q-less-679/bin/less "
+	pager = "/nix/store/y7kk3dj7wlls924zlvpwmm13gskfw1hk-git-2.51.2/share/git/contrib/diff-highlight/diff-highlight | /nix/store/isc45w88hjapxpvl7lpmkir93ipi2rl5-less-679/bin/less "
 
 [credential "https://gist.github.com"]
 	helper = ""
-	helper = "/nix/store/1bqff3apmh2qp2mk7hs4zv9ibvr5q0ic-gh-2.82.1/bin/gh auth git-credential"
+	helper = "/nix/store/c4091kqz1rw8n6vmygbvvwpr00ghdmks-gh-2.83.2/bin/gh auth git-credential"
 
 [credential "https://github.com"]
 	helper = ""
-	helper = "/nix/store/1bqff3apmh2qp2mk7hs4zv9ibvr5q0ic-gh-2.82.1/bin/gh auth git-credential"
+	helper = "/nix/store/c4091kqz1rw8n6vmygbvvwpr00ghdmks-gh-2.83.2/bin/gh auth git-credential"
 
 [help]
 	autocorrect = 1
@@ -30,7 +30,7 @@
 	defaultBranch = "master"
 
 [interactive]
-	diffFilter = "/nix/store/60440kg5c51rrlpinkk2rkg020q5q6kv-git-2.51.0/share/git/contrib/diff-highlight/diff-highlight"
+	diffFilter = "/nix/store/y7kk3dj7wlls924zlvpwmm13gskfw1hk-git-2.51.2/share/git/contrib/diff-highlight/diff-highlight"
 
 [merge]
 	conflictStyle = "diff3"
@@ -40,6 +40,9 @@
 
 [push]
 	default = "upstream"
+
+[rebase]
+	autoSquash = true
 
 [tag]
 	gpgSign = true
