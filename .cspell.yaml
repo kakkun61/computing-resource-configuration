@@ -17,6 +17,7 @@ words:
   - buildx
   - cachix
   - cfargotunnel
+  - chcp
   - checkjobs
   - checkwinsize
   - cleartype
@@ -66,6 +67,7 @@ words:
   - lessopen
   - lesspipe
   - libpam
+  - macskk
   - maihama
   - mdns
   - miniflux
@@ -114,8 +116,10 @@ words:
   - spacebar
   - squarespace
   - sshell
+  - sslmode
   - stdenv
   - substituters
+  - syncthing
   - tailnet
   - tensorchord
   - thefuck
@@ -139,6 +143,14 @@ ignoreWords:
   - ldflags
   - skajdjtjjzil7b
   - wergwcbwqpv
+  - 6BLKZ4X
+  - 4MXV2IS
+  - FOGMCRQ
+  - AU7ALUP
+  - IMAEGTP
+  - 65G6OB3
+  - LJ46OVA
+  - BT5JQQH
 ignoreRegExpList:
   - "[a-zA-Z0-9]{15,}"
 ignorePaths:
