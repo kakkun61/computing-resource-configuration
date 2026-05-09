@@ -7,6 +7,7 @@ controllers:
         image:
           tag: "v2.6.3"
         env:
+          TZ: "Asia/Tokyo"
           DB_HOSTNAME: database-rw
           DB_USERNAME: immich
           DB_PASSWORD:
