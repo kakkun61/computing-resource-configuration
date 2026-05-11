@@ -24,3 +24,21 @@ variable "tunnel_name" {
   type        = string
   default     = "my-tunnel"
 }
+
+variable "aws_profile" {
+  description = "AWS CLI profile 名"
+  type        = string
+  default     = "terraform"
+}
+
+variable "aws_region" {
+  description = "AWS Region"
+  type        = string
+  default     = "ap-northeast-3"
+}
+
+variable "aws_account_id" {
+  description = "AWS アカウント ID"
+  type        = string
+  sensitive   = true
+}

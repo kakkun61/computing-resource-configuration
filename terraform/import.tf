@@ -197,3 +197,23 @@ import {
   to = cloudflare_record.google_domainkey
   id = "aabd6d8c15111c838ff76cafe2831187/3b2c45ec87bd8e0fb00f0a402e840278"
 }
+
+import {
+  to = aws_s3_bucket.immich_backup
+  id = "immich-${var.aws_account_id}-ap-northeast-3-an"
+}
+
+import {
+  to = aws_iam_user.terraform
+  id = "terraform"
+}
+
+import {
+  to = aws_iam_user.immich_backup
+  id = "immich-backup"
+}
+
+import {
+  to = aws_iam_user.kazuki
+  id = "kazuki"
+}
