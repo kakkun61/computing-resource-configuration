@@ -11,6 +11,7 @@ words:
   - autogen
   - automount
   - avahi
+  - awscli
   - bashmarks
   - bsky
   - btop
@@ -37,6 +38,7 @@ words:
   - doujin
   - earthdistance
   - enableexit
+  - errexit
   - esac
   - extglob
   - fmask
@@ -94,6 +96,7 @@ words:
   - pdfding
   - pids
   - pinentry
+  - pipefail
   - pkgs
   - popd
   - poshdotenv
@@ -136,7 +139,9 @@ words:
   - websecure
   - xcape
   - xhci
+  - xtrace
   - yamls
+  - zstd
 useGitignore: true
 ignoreWords:
   - fddo5yuqduqu

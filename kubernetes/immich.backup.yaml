@@ -1,0 +1,82 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: backup
+  namespace: immich
+spec:
+  schedule: "0 3 * * 0" # At 03:00 on Sunday
+  suspend: true
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      template:
+        spec:
+          restartPolicy: Never
+          nodeSelector:
+            kubernetes.io/arch: amd64
+          containers:
+            - name: immich-backup
+              image: nixos/nix:2.32.8
+              imagePullPolicy: IfNotPresent
+              envFrom:
+                - secretRef:
+                    name: aws
+              env:
+                - name: AWS_DEFAULT_REGION
+                  value: ap-northeast-3
+              resources:
+                requests:
+                  cpu: 2000m
+                  memory: 512Mi
+                limits:
+                  cpu: 3000m
+                  memory: 1024Mi
+              volumeMounts:
+                - name: immich-library
+                  mountPath: /home/nonroot/.local/share/immich-library
+                  readOnly: true
+              command: ["/bin/sh", "-c"]
+              # 圧縮メモ
+              # zstd --threads=0 -3
+              #   2.9h
+              #   356GB
+              # zstd --threads=0 -1
+              #   2.6h
+              #   361GB
+              # xz --threads=0 -6
+              #   21h
+              #   356GB
+              # xz --threads=0 -1
+              #   19h
+              #   359GB
+              args:
+                - |
+                  set -o pipefail -o errexit -o xtrace
+
+                  # nix コマンドが使用できるようにする
+                  mkdir -p ~/.config/nix
+                  cat <<EOF > ~/.config/nix/nix.conf
+                  experimental-features = nix-command flakes
+                  EOF
+
+                  # 依存プログラムのインストール
+                  nix profile add nixpkgs#awscli2
+                  nix profile add nixpkgs#zstd
+
+                  # # ISO 8601 の basic format
+                  TIMESTAMP=$(date --utc +%Y%m%dT%H%M%SZ)
+                  TARGET_DIRECTORY=/home/nonroot/.local/share/immich-library
+                  ARCHIVE_NAME=backup-${TIMESTAMP}.tar.zst
+                  COMPRESS="zstd --threads=0 -1"
+                  AWS_S3_BUCKET="s3://immich-369113523265-ap-northeast-3-an"
+
+                  echo "${TIMESTAMP}"
+                  time tar --create --use-compress-program="${COMPRESS}" --file "${ARCHIVE_NAME}" --directory "${TARGET_DIRECTORY}" .
+                  time aws s3 cp --quiet "${ARCHIVE_NAME}" "${AWS_S3_BUCKET}/"
+          volumes:
+            - name: immich-library
+              persistentVolumeClaim:
+                claimName: immich-library
