@@ -1,5 +1,34 @@
 {
   "nodes": {
+    "cspell-nix": {
+      "inputs": {
+        "flake-parts": [
+          "locale-eaw",
+          "flake-parts"
+        ],
+        "nixpkgs": [
+          "locale-eaw",
+          "nixpkgs"
+        ],
+        "treefmt-nix": [
+          "locale-eaw",
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1769531726,
+        "narHash": "sha256-hPZYqdbkeHoje/s372bMmfVpTIpDlqiiCa0iQ+mbTzg=",
+        "owner": "kakkun61",
+        "repo": "cspell-nix",
+        "rev": "6e282bb296b3738e9b0166a840f271d394102a18",
+        "type": "github"
+      },
+      "original": {
+        "owner": "kakkun61",
+        "repo": "cspell-nix",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -33,6 +62,45 @@
       "original": {
         "owner": "hercules-ci",
         "repo": "flake-parts",
+        "type": "github"
+      }
+    },
+    "locale-eaw": {
+      "inputs": {
+        "cspell-nix": "cspell-nix",
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "locale-eaw": "locale-eaw_2",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "treefmt-nix": "treefmt-nix"
+      },
+      "locked": {
+        "lastModified": 1775712564,
+        "narHash": "sha256-Eg2jhAPOxeaj5UCqRafTie7L+wLPNipBNOiy/Bq4iGY=",
+        "path": "/home/kazuki/Projects/locale-eaw.nix",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/kazuki/Projects/locale-eaw.nix",
+        "type": "path"
+      }
+    },
+    "locale-eaw_2": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1773116655,
+        "narHash": "sha256-Ok8q8PF5UUNfjnuALYvZVib6TNTXQcEZ53Nsf2079lw=",
+        "owner": "hamano",
+        "repo": "locale-eaw",
+        "rev": "7f4c39ec1430cefd0347c720b3342b0481bd59ea",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hamano",
+        "repo": "locale-eaw",
         "type": "github"
       }
     },
@@ -98,9 +166,31 @@
     "root": {
       "inputs": {
         "flake-parts": "flake-parts",
+        "locale-eaw": "locale-eaw",
         "nix-darwin": "nix-darwin",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs"
+      }
+    },
+    "treefmt-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "locale-eaw",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1775125835,
+        "narHash": "sha256-2qYcPgzFhnQWchHo0SlqLHrXpux5i6ay6UHA+v2iH4U=",
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "rev": "75925962939880974e3ab417879daffcba36c4a3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "type": "github"
       }
     }
   },
