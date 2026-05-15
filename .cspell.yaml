@@ -80,6 +80,7 @@ words:
   - mtgto
   - netrc
   - networkmanager
+  - nixd
   - nixfmt
   - nixos
   - nixpkgs

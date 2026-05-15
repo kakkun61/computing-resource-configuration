@@ -24,6 +24,7 @@
         ghc
         gnumake
         lesspipe
+        nixd
         pinentry-tty
         pueue
         shellcheck
