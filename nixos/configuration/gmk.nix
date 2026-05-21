@@ -9,8 +9,17 @@
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
 
-    networking.hostName = "gmk";
-    networking.wireless.enable = true;
+    networking = {
+      hostName = "gmk";
+      wireless.enable = true;
+      firewall = {
+        allowedTCPPorts = [
+          # 開発時に使うポートを開けておく
+          3000
+          3001
+        ];
+      };
+    };
 
     fileSystems."/mnt/usb-raid" = {
       device = "/dev/disk/by-uuid/5444f6b1-a5f9-4fb8-b163-c333986603d4";
