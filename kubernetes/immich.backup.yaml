@@ -4,7 +4,7 @@ metadata:
   name: backup
   namespace: immich
 spec:
-  schedule: "0 3 * * 0" # At 03:00 on Sunday
+  schedule: "0 3 1 * *" # At 03:00 on the 1st day of every month
   suspend: true
   concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 1
