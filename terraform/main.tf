@@ -171,6 +171,15 @@ resource "cloudflare_record" "immich" {
   proxied = true
 }
 
+resource "cloudflare_record" "immich_local" {
+  zone_id = var.cloudflare_zone_id
+  name    = "immich.local"
+  type    = "A"
+  content = "192.168.11.52"
+  ttl     = 1
+  proxied = false
+}
+
 resource "cloudflare_record" "miniflux" {
   zone_id = var.cloudflare_zone_id
   name    = "miniflux"
@@ -180,9 +189,9 @@ resource "cloudflare_record" "miniflux" {
   proxied = true
 }
 
-resource "cloudflare_record" "immich_local" {
+resource "cloudflare_record" "miniflux_local" {
   zone_id = var.cloudflare_zone_id
-  name    = "immich.local"
+  name    = "miniflux.local"
   type    = "A"
   content = "192.168.11.52"
   ttl     = 1
