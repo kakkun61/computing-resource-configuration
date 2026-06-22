@@ -166,8 +166,9 @@ pdfding:
       #   salt: "some_salt"
 
   ## Specify further environment variables that should be added to the pod
-  extraConfig: []
+  extraConfig:
     # EXTRA_KEY: EXTRA_VALUE
+    WORKER_TIMEOUT: "120"
 
   ## Existing Kubernetes Secret that contains PdfDing's secrets,
   ## e.g. SECRET_KEY, OIDC_CLIENT_SECRET, POSTGRES_PASSWORD
@@ -212,7 +213,7 @@ image:
 resources:
   limits:
     cpu: 500m
-    memory: 1024Mi
+    memory: 512Mi
   requests:
     cpu: 250m
     memory: 512Mi
