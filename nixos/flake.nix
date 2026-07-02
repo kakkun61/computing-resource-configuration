@@ -15,13 +15,6 @@
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
-    locale-eaw = {
-      url = "path:/home/kazuki/Projects/locale-eaw.nix";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-parts.follows = "flake-parts";
-      };
-    };
   };
 
   outputs =
@@ -30,7 +23,6 @@
       nixpkgs,
       nixos-wsl,
       nix-darwin,
-      locale-eaw,
       flake-parts,
       ...
     }:
@@ -70,8 +62,6 @@
               self.nixosModules.kubernetes
               self.nixosModules.tailscale
               self.nixosModules.cloudflare-tunnel-home
-              locale-eaw.nixosModules.default
-              { localeEaw.enable = true; }
               ./configuration/gmk.nix
               { system.stateVersion = "25.05"; }
             ];
