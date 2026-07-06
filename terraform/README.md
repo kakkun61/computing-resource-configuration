@@ -11,20 +11,24 @@
 
 ### 実行前提
 
-- ローカル実行用の IAM ユーザーは `terraform` を使う
-- AWS CLI の profile 名は `terraform` を使う
 - Region は `ap-northeast-3` を使う
+- `make plan` / `make apply` を使う
+- `plan` / `apply` は `aws-sso.ps1` を読み込み、`Set-AwsSsoEnv` で AWS 認証情報をセットしてから Terraform を実行する
 
 ### 実行手順
 
-1. `aws sts get-caller-identity --profile terraform` で `terraform` ユーザーになっていることを確認する
-2. `terraform init` を実行する
-3. `terraform plan` を実行する
-4. 既存の AWS 設定は `terraform/import.tf` の import ブロックで state に取り込む
-5. IAM の `terraform` ユーザーも同じ import ブロックで state に取り込む
+1. `aws login --profile terraform` を実行する
+2. `make init` を実行する
+3. `make plan` を実行する
+4. 問題なければ `make apply` を実行する
+
+### Make 変数
+
+- `AWS_PROFILE` の既定値は `terraform`
+- 例: `make plan AWS_PROFILE=default`
 
 ### 補足
 
 - `terraform` ユーザーには管理者権限を付けない
-- Terraform は AWS profile で認証する
+- 手動で実行する場合は `aws-sso.ps1` を読み込み、`Set-AwsSsoEnv` 実行後に Terraform コマンドを実行する
 - IAM は `terraform` ユーザー本体と、そのユーザーに付ける最小権限の inline policy を管理する

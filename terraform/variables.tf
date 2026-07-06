@@ -25,12 +25,6 @@ variable "tunnel_name" {
   default     = "my-tunnel"
 }
 
-variable "aws_profile" {
-  description = "AWS CLI profile 名"
-  type        = string
-  default     = "terraform"
-}
-
 variable "aws_region" {
   description = "AWS Region"
   type        = string

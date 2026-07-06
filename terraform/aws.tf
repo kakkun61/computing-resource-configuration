@@ -50,26 +50,20 @@ resource "aws_s3_bucket_lifecycle_configuration" "immich_backup" {
 
     transition {
       days          = 30
-      storage_class = "STANDARD_IA"
-    }
-
-    transition {
-      days          = 90
-      storage_class = "GLACIER"
+      storage_class = "DEEP_ARCHIVE"
     }
 
     noncurrent_version_transition {
       noncurrent_days = 30
-      storage_class   = "STANDARD_IA"
+      storage_class   = "DEEP_ARCHIVE"
     }
 
-    noncurrent_version_transition {
-      noncurrent_days = 90
-      storage_class   = "GLACIER"
+    noncurrent_version_expiration {
+      noncurrent_days = 60
     }
 
     abort_incomplete_multipart_upload {
-      days_after_initiation = 7
+      days_after_initiation = 1
     }
   }
 }
