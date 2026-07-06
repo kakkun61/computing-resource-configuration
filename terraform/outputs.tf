@@ -35,3 +35,14 @@ output "account_id" {
   description = "Cloudflare Account ID"
   value       = var.cloudflare_account_id
 }
+
+output "immich_backup_s3_bucket_name" {
+  description = "Immich バックアップ用 S3 バケット名"
+  value       = aws_s3_bucket.immich_backup.bucket
+  sensitive   = true
+}
+
+output "immich_backup_s3_bucket_arn" {
+  description = "Immich バックアップ用 S3 バケット ARN"
+  value       = aws_s3_bucket.immich_backup.arn
+}

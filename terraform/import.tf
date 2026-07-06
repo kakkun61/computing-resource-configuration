@@ -204,6 +204,26 @@ import {
 }
 
 import {
+  to = aws_s3_bucket_versioning.immich_backup
+  id = "immich-${var.aws_account_id}-ap-northeast-3-an"
+}
+
+import {
+  to = aws_s3_bucket_server_side_encryption_configuration.immich_backup
+  id = "immich-${var.aws_account_id}-ap-northeast-3-an"
+}
+
+import {
+  to = aws_s3_bucket_public_access_block.immich_backup
+  id = "immich-${var.aws_account_id}-ap-northeast-3-an"
+}
+
+import {
+  to = aws_s3_bucket_ownership_controls.immich_backup
+  id = "immich-${var.aws_account_id}-ap-northeast-3-an"
+}
+
+import {
   to = aws_iam_user.terraform
   id = "terraform"
 }
