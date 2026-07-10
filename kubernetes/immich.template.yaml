@@ -96,6 +96,6 @@ metadata:
   namespace: kube-system
 spec:
   chart: oci://ghcr.io/immich-app/immich-charts/immich
-  version: "0.10.3"
+  version: "0.12.1"
   targetNamespace: immich
   valuesContent: |-
