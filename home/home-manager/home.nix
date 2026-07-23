@@ -39,6 +39,12 @@
           enable = pkgs.stdenv.hostPlatform.isDarwin;
           source = root + /aqua-skk/kana-rule.conf;
         };
+        "${config.programs.gpg.homedir}/gpg-agent.conf".text = ''
+          # 最後にアクセスしてから 6 時間後にロック
+          default-cache-ttl 21600
+          # 最初にアクセスしてから 24 時間後にロック
+          max-cache-ttl 86400
+        '';
       };
     };
 
