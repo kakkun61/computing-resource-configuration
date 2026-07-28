@@ -39,12 +39,6 @@
           enable = pkgs.stdenv.hostPlatform.isDarwin;
           source = root + /aqua-skk/kana-rule.conf;
         };
-        "${config.programs.gpg.homedir}/gpg-agent.conf".text = ''
-          # 最後にアクセスしてから 6 時間後にロック
-          default-cache-ttl 21600
-          # 最初にアクセスしてから 24 時間後にロック
-          max-cache-ttl 86400
-        '';
       };
     };
 
@@ -185,7 +179,10 @@
       gpg-agent = {
         enable = true;
         enableBashIntegration = true;
-        defaultCacheTtl = 7200;
+        # 最後にアクセスしてから 6 時間後にロック
+        defaultCacheTtl = 21600;
+        # 最初にアクセスしてから 24 時間後にロック
+        maxCacheTtl = 86400;
         pinentry.package = pkgs.pinentry-tty;
       };
       pueue.enable = true;
