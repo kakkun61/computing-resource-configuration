@@ -32,6 +32,7 @@
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKnIZjps96Vpmy8+pTrVd66RQ42j8824yn46VNDi8Z0T kazuki@surface"
         ];
         packages = with pkgs; [ home-manager ];
+        uid = 1000; # デフォルトは null で 1000 から順番に採番されるらしい
         useDefaultShell = true;
       };
     };

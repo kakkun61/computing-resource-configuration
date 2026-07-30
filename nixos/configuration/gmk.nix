@@ -1,3 +1,4 @@
+{ config, ... }:
 {
   imports = [
     ./gmk/kubernetes-volume-nfs.nix
@@ -36,6 +37,14 @@
         # ブロックデバイスの出現待ち時間を制限する。
         "x-systemd.device-timeout=10"
       ];
+    };
+
+    # kazuki のログインセッション・systemd --user サービス全体のメモリー使用量に上限を設ける。
+    systemd.slices."user-${toString config.users.users.kazuki.uid}".sliceConfig = {
+      # 超えると最もメモリを食っているプロセスが OOM-Killer で強制終了
+      MemoryMax = "8G";
+      # 超えると OS が積極的にスワップさせたり低速化させて抑制
+      MemoryHigh = "6G";
     };
   };
 }
