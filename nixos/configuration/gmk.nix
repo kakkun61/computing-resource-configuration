@@ -39,12 +39,18 @@
       ];
     };
 
-    # kazuki のログインセッション・systemd --user サービス全体のメモリー使用量に上限を設ける。
-    systemd.slices."user-${toString config.users.users.kazuki.uid}".sliceConfig = {
-      # 超えると最もメモリを食っているプロセスが OOM-Killer で強制終了
-      MemoryMax = "8G";
-      # 超えると OS が積極的にスワップさせたり低速化させて抑制
-      MemoryHigh = "6G";
+    systemd.slices = {
+      # kazuki のログインセッション・systemd --user サービス全体のメモリー使用量に上限を設ける。
+      "user-${toString config.users.users.kazuki.uid}".sliceConfig = {
+        # 超えると最もメモリを食っているプロセスが OOM-Killer で強制終了
+        MemoryMax = "8G";
+        # 超えると OS が積極的にスワップさせたり低速化させて抑制
+        MemoryHigh = "6G";
+      };
+      "user-${toString config.users.users.rescue.uid}".sliceConfig = {
+        # これだけは確保するよう他のプロセスから回収するよう依頼
+        MemoryMin = "256M";
+      };
     };
   };
 }
