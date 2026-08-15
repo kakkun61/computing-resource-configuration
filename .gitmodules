@@ -13,3 +13,6 @@
 [submodule "home/lib/git"]
 	path = home/lib/git
 	url = git@github.com:git/git.git
+[submodule "windows/wowindow"]
+	path = windows/wowindow
+	url = git@github.com:kakkun61/wowindow.git

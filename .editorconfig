@@ -22,3 +22,7 @@ indent_style = tab
 [home/aqua-skk/kana-rule.conf]
 charset = euc-jp
 trim_trailing_whitespace = false
+
+[windows/*.xml]
+charset = utf-16le
+insert_final_newline = false
