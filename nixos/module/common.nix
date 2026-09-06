@@ -53,7 +53,7 @@
 
     security.sudo.extraRules = [
       {
-        users = [ "kazuki" ];
+        users = [ "kazuki" "rescue" ];
         commands = [
           {
             command = "ALL";
