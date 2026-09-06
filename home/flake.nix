@@ -15,6 +15,13 @@
       url = "git+https://github.com/git/git";
       flake = false;
     };
+    my-pkgs = {
+      url = "github:kakkun61/nur-packages";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-parts.follows = "flake-parts";
+      };
+    };
   };
 
   outputs =
@@ -24,6 +31,7 @@
       flake-parts,
       home-manager,
       git,
+      my-pkgs,
       ...
     }:
     flake-parts.lib.mkFlake { inherit inputs; } {
@@ -63,6 +71,7 @@
               pkgs = import nixpkgs {
                 system = "x86_64-linux";
                 config.allowUnfree = true;
+                overlays = [ my-pkgs.overlays.default ];
               };
               modules = [
                 self.homeModules.default
