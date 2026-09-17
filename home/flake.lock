@@ -1,5 +1,17 @@
 {
   "nodes": {
+    "coding-agent": {
+      "flake": false,
+      "locked": {
+        "path": "../coding-agent",
+        "type": "path"
+      },
+      "original": {
+        "path": "../coding-agent",
+        "type": "path"
+      },
+      "parent": []
+    },
     "envar": {
       "inputs": {
         "flake-parts": "flake-parts_2",
@@ -175,6 +187,7 @@
     },
     "root": {
       "inputs": {
+        "coding-agent": "coding-agent",
         "flake-parts": "flake-parts",
         "git": "git",
         "home-manager": "home-manager",

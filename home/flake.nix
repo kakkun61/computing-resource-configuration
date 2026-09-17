@@ -15,6 +15,10 @@
       url = "git+https://github.com/git/git";
       flake = false;
     };
+    coding-agent = {
+      url = "path:../coding-agent";
+      flake = false;
+    };
     my-pkgs = {
       url = "github:kakkun61/nur-packages";
       inputs = {
@@ -31,6 +35,7 @@
       flake-parts,
       home-manager,
       git,
+      coding-agent,
       my-pkgs,
       ...
     }:
@@ -47,7 +52,7 @@
         };
       flake = {
         homeModules.default = import ./home-manager/home.nix {
-          inherit git;
+          inherit git coding-agent;
           root = ./.;
         };
         templates.default = import ./home-manager/template.nix;

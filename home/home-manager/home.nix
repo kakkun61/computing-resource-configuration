@@ -1,6 +1,7 @@
 {
   root,
   git,
+  coding-agent,
 }:
 {
   config,
@@ -39,6 +40,8 @@
           enable = pkgs.stdenv.hostPlatform.isDarwin;
           source = root + /aqua-skk/kana-rule.conf;
         };
+        ".claude/skills/commit".source = coding-agent + /skill/commit;
+        ".cursor/skills/commit".source = coding-agent + /skill/commit;
       };
     };
 
