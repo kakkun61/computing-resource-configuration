@@ -17,6 +17,9 @@
       sessionPath = [
         "$HOME/.local/bin"
       ];
+      sessionVariables = {
+        KUBECONFIG = "$HOME/.kube/config";
+      };
     };
   };
 }
