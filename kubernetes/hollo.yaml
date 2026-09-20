@@ -1,0 +1,144 @@
+# 参考：https://docs.hollo.social/install/docker/
+#      https://docs.hollo.social/install/env/
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: hollo
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hollo
+  namespace: hollo
+spec:
+  rules:
+    - host: ap.kakkun61.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: hollo
+                port:
+                  number: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hollo
+  namespace: hollo
+spec:
+  type: ClusterIP
+  ports:
+    - port: 3000
+      targetPort: 3000
+      protocol: TCP
+  selector:
+    app: hollo
+---
+# 投稿画像・アバターなどのメディアを保存する領域（DRIVE_DISK = fs）
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: storage
+  namespace: hollo
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: nfs-client
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hollo
+  namespace: hollo
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: hollo
+  template:
+    metadata:
+      labels:
+        app: hollo
+    spec:
+      containers:
+        - name: hollo
+          image: ghcr.io/fedify-dev/hollo:0.9.18
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          env:
+            # ユーザー変数
+            - # DATABASE_URL から参照されるため、それより前に定義する必要がある。
+              # CNPG が自動生成する <Cluster名>-app という Secret
+              name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: database-app
+                  key: password
+            # Hollo 変数
+            # 参考：https://docs.hollo.social/ja/install/env/
+            ## 基本設定 https://docs.hollo.social/ja/install/env/#基本設定
+            - name: DATABASE_URL
+              value: postgres://hollo:$(DB_PASSWORD)@database-rw/hollo?sslmode=disable
+            - # openssl rand -base64 32 などで生成し、Secret "app" の secret-key キーに入れておく
+              name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: app
+                  key: secret-key
+            - name: TZ
+              value: "Asia/Tokyo"
+            - # Traefik の後ろで動くため、プロキシーのヘッダーを信頼する
+              name: BEHIND_PROXY
+              value: "true"
+            - name: HANDLE_HOST
+              value: "kakkun61.com"
+            - name: WEB_ORIGIN
+              value: "https://ap.kakkun61.com"
+            ## 追加機能 https://docs.hollo.social/ja/install/env/#追加機能
+            ## メディアストレージ https://docs.hollo.social/ja/install/env/#メディアストレージ
+            - name: DRIVE_DISK
+              value: "fs"
+            - name: STORAGE_URL_BASE
+              value: $(WEB_ORIGIN)
+            - name: FS_STORAGE_PATH
+              value: "/var/lib/hollo"
+          volumeMounts:
+            - name: storage
+              mountPath: /var/lib/hollo
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              memory: 512Mi
+      volumes:
+        - name: storage
+          persistentVolumeClaim:
+            claimName: storage
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: database
+  namespace: hollo
+spec:
+  instances: 1
+  storage:
+    storageClass: local-path
+    size: 5Gi
+  affinity:
+    nodeSelector:
+      kubernetes.io/hostname: gmk
+  bootstrap:
+    initdb:
+      database: hollo
+      owner: hollo
