@@ -9,43 +9,8 @@ import {
 }
 
 import {
-  to = cloudflare_record.root_a_1
-  id = "aabd6d8c15111c838ff76cafe2831187/cb093d52e3e6f8c42974c46e8bf7980b"
-}
-
-import {
-  to = cloudflare_record.root_a_2
-  id = "aabd6d8c15111c838ff76cafe2831187/282aa7b6b4a20b8173b8846db0b43079"
-}
-
-import {
-  to = cloudflare_record.root_a_3
-  id = "aabd6d8c15111c838ff76cafe2831187/65280c54284e89ef00ceda62d8bc2392"
-}
-
-import {
-  to = cloudflare_record.root_a_4
-  id = "aabd6d8c15111c838ff76cafe2831187/6bda628551cbb89b4e7ef50467b8f545"
-}
-
-import {
-  to = cloudflare_record.root_aaaa_1
-  id = "aabd6d8c15111c838ff76cafe2831187/9f7ebb623dfdb37ada9a9afc2211967b"
-}
-
-import {
-  to = cloudflare_record.root_aaaa_2
-  id = "aabd6d8c15111c838ff76cafe2831187/527549da93f2992dc8ecdf13fa84898e"
-}
-
-import {
-  to = cloudflare_record.root_aaaa_3
-  id = "aabd6d8c15111c838ff76cafe2831187/cc21bf1d727b6c130857fdb0ca2656ab"
-}
-
-import {
-  to = cloudflare_record.root_aaaa_4
-  id = "aabd6d8c15111c838ff76cafe2831187/2cef8a31679bf511b9f9e7b746c5d49f"
+  to = cloudflare_pages_project.profile_site
+  id = "61279d1dd2755e7f6d3124793a3aa6b1/profile-site"
 }
 
 import {

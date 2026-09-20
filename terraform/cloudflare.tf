@@ -1,75 +1,30 @@
 # TTL の 1 は auto を意味する
 
-resource "cloudflare_record" "root_a_1" {
-  zone_id = var.cloudflare_zone_id
-  name    = var.domain
-  type    = "A"
-  content = "185.199.108.153"
-  ttl     = 1
-  proxied = false
+resource "cloudflare_pages_project" "profile_site" {
+  account_id        = var.cloudflare_account_id
+  name              = "profile-site"
+  production_branch = "master"
 }
 
-resource "cloudflare_record" "root_a_2" {
-  zone_id = var.cloudflare_zone_id
-  name    = var.domain
-  type    = "A"
-  content = "185.199.109.153"
-  ttl     = 1
-  proxied = false
+resource "cloudflare_pages_domain" "profile_site_root" {
+  account_id   = var.cloudflare_account_id
+  project_name = cloudflare_pages_project.profile_site.name
+  domain       = var.domain
 }
 
-resource "cloudflare_record" "root_a_3" {
-  zone_id = var.cloudflare_zone_id
-  name    = var.domain
-  type    = "A"
-  content = "185.199.110.153"
-  ttl     = 1
-  proxied = false
+resource "cloudflare_pages_domain" "profile_site_www" {
+  account_id   = var.cloudflare_account_id
+  project_name = cloudflare_pages_project.profile_site.name
+  domain       = "www.${var.domain}"
 }
 
-resource "cloudflare_record" "root_a_4" {
+resource "cloudflare_record" "root" {
   zone_id = var.cloudflare_zone_id
   name    = var.domain
-  type    = "A"
-  content = "185.199.111.153"
+  type    = "CNAME"
+  content = "profile-site-b8z.pages.dev"
   ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "root_aaaa_1" {
-  zone_id = var.cloudflare_zone_id
-  name    = var.domain
-  type    = "AAAA"
-  content = "2606:50c0:8000::153"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "root_aaaa_2" {
-  zone_id = var.cloudflare_zone_id
-  name    = var.domain
-  type    = "AAAA"
-  content = "2606:50c0:8001::153"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "root_aaaa_3" {
-  zone_id = var.cloudflare_zone_id
-  name    = var.domain
-  type    = "AAAA"
-  content = "2606:50c0:8002::153"
-  ttl     = 1
-  proxied = false
-}
-
-resource "cloudflare_record" "root_aaaa_4" {
-  zone_id = var.cloudflare_zone_id
-  name    = var.domain
-  type    = "AAAA"
-  content = "2606:50c0:8003::153"
-  ttl     = 1
-  proxied = false
+  proxied = true
 }
 
 resource "cloudflare_record" "fdm_3d_local" {
@@ -103,9 +58,9 @@ resource "cloudflare_record" "www" {
   zone_id = var.cloudflare_zone_id
   name    = "www"
   type    = "CNAME"
-  content = "kakkun61.github.io"
+  content = "profile-site-b8z.pages.dev"
   ttl     = 1
-  proxied = false
+  proxied = true
 }
 
 resource "cloudflare_record" "bsky" {
