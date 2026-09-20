@@ -1,8 +1,5 @@
 # TTL の 1 は auto を意味する
 
-# プロフィールサイト (kakkun61.github.io を移行) は Cloudflare Pages でホスティングする。
-# デプロイ自体は GitHub Actions (kakkun61/kakkun61.github.io の .github/workflows/deploy.yml)
-# から `wrangler pages deploy` で行うため、source ブロックは持たせない (Direct Upload)。
 resource "cloudflare_pages_project" "profile_site" {
   account_id        = var.cloudflare_account_id
   name              = "profile-site"
@@ -21,7 +18,6 @@ resource "cloudflare_pages_domain" "profile_site_www" {
   domain       = "www.${var.domain}"
 }
 
-# apex ドメインを Pages の *.pages.dev に向ける CNAME。CNAME flattening のため proxied 必須。
 resource "cloudflare_record" "root" {
   zone_id = var.cloudflare_zone_id
   name    = var.domain
