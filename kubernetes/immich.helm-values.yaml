@@ -5,7 +5,7 @@ controllers:
     containers:
       main:
         image:
-          tag: "v3.1.0"
+          tag: "v3.2.2"
         env:
           TZ: "Asia/Tokyo"
           DB_HOSTNAME: database-rw
