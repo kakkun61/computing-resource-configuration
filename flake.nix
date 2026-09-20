@@ -2,7 +2,7 @@
   description = "計算リソース設定集";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/release-25.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/release-26.05";
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";
@@ -79,6 +79,7 @@
           };
           devShells.default = pkgs.mkShell {
             packages = with pkgs; [
+              awscli2
               nodejs
               terraform
             ];
