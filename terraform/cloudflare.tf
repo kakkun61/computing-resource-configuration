@@ -352,27 +352,3 @@ resource "cloudflare_zero_trust_tunnel_cloudflared_config" "home" {
     }
   }
 }
-
-resource "cloudflare_ruleset" "hollo_well_known_redirect" {
-  zone_id     = var.cloudflare_zone_id
-  name        = "hollo-well-known-redirect"
-  description = "Redirect Hollo webfinger/nodeinfo/host-meta discovery paths to ap.${var.domain}"
-  kind        = "zone"
-  phase       = "http_request_dynamic_redirect"
-
-  rules {
-    ref         = "redirect_well_known_to_ap"
-    description = "well-known discovery paths to ap subdomain, preserve query string"
-    expression  = "(http.request.uri.path in {\"/.well-known/webfinger\" \"/.well-known/nodeinfo\" \"/.well-known/host-meta\"})"
-    action      = "redirect"
-    action_parameters {
-      from_value {
-        status_code = 301
-        target_url {
-          expression = "concat(\"https://ap.${var.domain}\", http.request.uri.path)"
-        }
-        preserve_query_string = true
-      }
-    }
-  }
-}
