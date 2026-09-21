@@ -76,6 +76,11 @@ resource "aws_iam_user" "immich_backup" {
   name = "immich-backup"
 }
 
+resource "aws_iam_access_key" "immich_backup" {
+  user = aws_iam_user.immich_backup.name
+}
+
+
 resource "aws_iam_user" "kazuki" {
   name = "kazuki"
 }
@@ -163,9 +168,10 @@ resource "aws_iam_user_policy" "terraform_execution" {
 
 data "aws_iam_policy_document" "immich_backup_s3" {
   statement {
-    sid = "AllowS3ListBucketMultipartUploads"
+    sid = "AllowS3BucketListing"
 
     actions = [
+      "s3:ListBucket",
       "s3:ListBucketMultipartUploads",
     ]
 
@@ -173,10 +179,12 @@ data "aws_iam_policy_document" "immich_backup_s3" {
   }
 
   statement {
-    sid = "AllowS3PutObjectAndMultipart"
+    sid = "AllowS3ObjectReadWriteAndMultipart"
 
     actions = [
+      "s3:GetObject",
       "s3:PutObject",
+      "s3:DeleteObject",
       "s3:AbortMultipartUpload",
       "s3:ListMultipartUploadParts",
     ]

@@ -46,3 +46,16 @@ output "immich_backup_s3_bucket_arn" {
   description = "Immich バックアップ用 S3 バケット ARN"
   value       = aws_s3_bucket.immich_backup.arn
 }
+
+output "immich_backup_access_key_id" {
+  description = "Immich バックアップ用 IAM アクセスキー ID（CNPG ObjectStore の Secret 作成用）"
+  value       = aws_iam_access_key.immich_backup.id
+  sensitive   = true
+}
+
+output "immich_backup_secret_access_key" {
+  description = "Immich バックアップ用 IAM シークレットアクセスキー（CNPG ObjectStore の Secret 作成用）"
+  value       = aws_iam_access_key.immich_backup.secret
+  sensitive   = true
+}
+

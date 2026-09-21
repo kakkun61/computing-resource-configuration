@@ -1,0 +1,11 @@
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: plugin-barman-cloud
+  namespace: kube-system
+spec:
+  repo: https://cloudnative-pg.github.io/charts
+  chart: plugin-barman-cloud
+  version: "0.8.0"
+  targetNamespace: cnpg-system
+  valuesContent: |-

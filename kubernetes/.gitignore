@@ -1,5 +1,7 @@
+cert-manager.yaml
 cloud-native-pg.yaml
 immich.yaml
 nfs-subdir-external-provisioner.yaml
 pdfding.yaml
+plugin-barman-cloud.yaml
 traefik.yaml

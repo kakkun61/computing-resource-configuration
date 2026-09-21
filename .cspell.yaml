@@ -1,9 +1,10 @@
 $schema: https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json
-version: 0.2
+version: "0.2"
 language: en
 words:
   - ahci
   - antialiasing
+  - archiver
   - aspmx
   - atproto
   - authelia
@@ -12,6 +13,7 @@ words:
   - automount
   - avahi
   - awscli
+  - barmancloud
   - bashmarks
   - bsky
   - btop
@@ -60,6 +62,7 @@ words:
   - inputmethod
   - iohk
   - iterm
+  - jetstack
   - jsonfmt
   - kakkun
   - karabiner

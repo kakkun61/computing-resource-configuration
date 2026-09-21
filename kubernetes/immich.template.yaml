@@ -74,6 +74,51 @@ spec:
         # Commands based on: https://immich.app/docs/administration/postgres-standalone/#without-superuser-permission
         - CREATE EXTENSION vchord CASCADE;
         - CREATE EXTENSION earthdistance CASCADE;
+  plugins:
+    - name: barman-cloud.cloudnative-pg.io
+      isWALArchiver: true
+      parameters:
+        barmanObjectName: immich-backup
+---
+# 参考：https://cloudnative-pg.io/plugin-barman-cloud/docs/usage/
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: immich-backup
+  namespace: immich
+spec:
+  configuration:
+    destinationPath: s3://immich-369113523265-ap-northeast-3-an/postgres-cnpg
+    s3Credentials:
+      accessKeyId:
+        name: immich-backup-s3
+        key: access-key-id
+      secretAccessKey:
+        name: immich-backup-s3
+        key: secret-access-key
+    wal:
+      compression: gzip
+    data:
+      compression: gzip
+  instanceSidecarConfiguration:
+    env:
+      - name: AWS_DEFAULT_REGION
+        value: ap-northeast-3
+  retentionPolicy: "90d"
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: database-backup
+  namespace: immich
+spec:
+  schedule: "0 0 3 * * *" # 毎日 03:00
+  backupOwnerReference: self
+  cluster:
+    name: database
+  method: plugin
+  pluginConfiguration:
+    name: barman-cloud.cloudnative-pg.io
 ---
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
