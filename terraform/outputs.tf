@@ -3,7 +3,7 @@ output "dns_records_summary" {
   value = {
     total_a_records     = 4
     total_aaaa_records  = 0
-    total_cname_records = 12
+    total_cname_records = 13
     total_mx_records    = 5
     total_ns_records    = 4
     total_txt_records   = 7
