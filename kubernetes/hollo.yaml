@@ -142,3 +142,48 @@ spec:
     initdb:
       database: hollo
       owner: hollo
+  plugins:
+    - name: barman-cloud.cloudnative-pg.io
+      isWALArchiver: true
+      parameters:
+        barmanObjectName: hollo-backup
+---
+# 参考：https://cloudnative-pg.io/plugin-barman-cloud/docs/usage/
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: hollo-backup
+  namespace: hollo
+spec:
+  configuration:
+    destinationPath: s3://hollo-369113523265-ap-northeast-3-an/postgres-cnpg
+    s3Credentials:
+      accessKeyId:
+        name: hollo-backup-s3
+        key: access-key-id
+      secretAccessKey:
+        name: hollo-backup-s3
+        key: secret-access-key
+    wal:
+      compression: gzip
+    data:
+      compression: gzip
+  instanceSidecarConfiguration:
+    env:
+      - name: AWS_DEFAULT_REGION
+        value: ap-northeast-3
+  retentionPolicy: "90d"
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: database-backup
+  namespace: hollo
+spec:
+  schedule: "0 0 3 * * *" # 毎日 03:00
+  backupOwnerReference: self
+  cluster:
+    name: database
+  method: plugin
+  pluginConfiguration:
+    name: barman-cloud.cloudnative-pg.io

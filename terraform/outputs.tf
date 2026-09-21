@@ -59,3 +59,25 @@ output "immich_backup_secret_access_key" {
   sensitive   = true
 }
 
+output "hollo_backup_s3_bucket_name" {
+  description = "Hollo バックアップ用 S3 バケット名"
+  value       = aws_s3_bucket.hollo_backup.bucket
+  sensitive   = true
+}
+
+output "hollo_backup_access_key_id" {
+  description = "Hollo バックアップ用 IAM アクセスキー ID（CNPG ObjectStore の Secret 作成用）"
+  value       = aws_iam_access_key.hollo_backup.id
+  sensitive   = true
+}
+
+output "hollo_backup_secret_access_key" {
+  description = "Hollo バックアップ用 IAM シークレットアクセスキー（CNPG ObjectStore の Secret 作成用）"
+  value       = aws_iam_access_key.hollo_backup.secret
+  sensitive   = true
+}
+
+output "hollo_backup_s3_bucket_arn" {
+  description = "Hollo バックアップ用 S3 バケット ARN"
+  value       = aws_s3_bucket.hollo_backup.arn
+}

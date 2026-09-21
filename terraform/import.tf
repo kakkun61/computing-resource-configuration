@@ -189,6 +189,11 @@ import {
 }
 
 import {
+  to = aws_s3_bucket.hollo_backup
+  id = "hollo-${var.aws_account_id}-ap-northeast-3-an"
+}
+
+import {
   to = aws_iam_user.terraform
   id = "terraform"
 }

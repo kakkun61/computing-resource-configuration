@@ -43,6 +43,7 @@ words:
   - errexit
   - esac
   - extglob
+  - fedify
   - fmask
   - frontmost
   - ghcman
@@ -91,13 +92,15 @@ words:
   - nofail
   - nofork
   - nonroot
-  - NOPASSWD
+  - nopasswd
   - npiperelay
   - nssmdns
   - numtide
   - nvme
   - okamoto
   - pdfding
+  - pgpassword
+  - pgsslmode
   - pids
   - pinentry
   - pipefail

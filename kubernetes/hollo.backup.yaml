@@ -1,0 +1,72 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: media-backup
+  namespace: hollo
+spec:
+  schedule: "0 3 2 * *" # At 03:00 on the 2nd day of every month
+  suspend: false
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      template:
+        spec:
+          restartPolicy: Never
+          nodeSelector:
+            kubernetes.io/arch: amd64
+          containers:
+            - name: hollo-media-backup
+              image: nixos/nix:2.32.8
+              imagePullPolicy: IfNotPresent
+              envFrom:
+                - secretRef:
+                    name: aws
+              env:
+                - name: AWS_DEFAULT_REGION
+                  value: ap-northeast-3
+              resources:
+                requests:
+                  cpu: 500m
+                  memory: 256Mi
+                limits:
+                  cpu: 1000m
+                  memory: 512Mi
+              volumeMounts:
+                - name: storage
+                  mountPath: /home/nonroot/.local/share/hollo-storage
+                  readOnly: true
+              command: ["/bin/sh", "-c"]
+              args:
+                - |
+                  set -o pipefail -o errexit -o xtrace
+
+                  # nix コマンドが使用できるようにする
+                  mkdir -p ~/.config/nix
+                  cat <<EOF > ~/.config/nix/nix.conf
+                  experimental-features = nix-command flakes
+                  EOF
+
+                  # 依存プログラムのインストール
+                  nix profile add nixpkgs#awscli2
+                  nix profile add nixpkgs#zstd
+
+                  # ISO 8601 の basic format
+                  TIMESTAMP=$(date --utc +%Y%m%dT%H%M%SZ)
+                  AWS_S3_BUCKET="s3://hollo-369113523265-ap-northeast-3-an"
+
+                  echo "${TIMESTAMP}"
+
+                  # メディアファイル（DRIVE_DISK=fs のストレージ）のバックアップ
+                  # Postgres 側は CNPG ネイティブバックアップ（WAL アーカイブ + ScheduledBackup、hollo.yaml 参照）に移行済み
+                  MEDIA_ARCHIVE_NAME=media-${TIMESTAMP}.tar.zst
+                  MEDIA_TARGET_DIRECTORY=/home/nonroot/.local/share/hollo-storage
+                  COMPRESS="zstd --threads=0 -1"
+                  time tar --create --use-compress-program="${COMPRESS}" --file "${MEDIA_ARCHIVE_NAME}" --directory "${MEDIA_TARGET_DIRECTORY}" .
+                  time aws s3 cp --quiet "${MEDIA_ARCHIVE_NAME}" "${AWS_S3_BUCKET}/"
+          volumes:
+            - name: storage
+              persistentVolumeClaim:
+                claimName: storage

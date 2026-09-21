@@ -68,6 +68,76 @@ resource "aws_s3_bucket_lifecycle_configuration" "immich_backup" {
   }
 }
 
+resource "aws_s3_bucket" "hollo_backup" {
+  bucket = "hollo-${var.aws_account_id}-ap-northeast-3-an"
+}
+
+resource "aws_s3_bucket_versioning" "hollo_backup" {
+  bucket = aws_s3_bucket.hollo_backup.id
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "hollo_backup" {
+  bucket = aws_s3_bucket.hollo_backup.id
+
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "AES256"
+    }
+  }
+}
+
+resource "aws_s3_bucket_public_access_block" "hollo_backup" {
+  bucket = aws_s3_bucket.hollo_backup.id
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+
+resource "aws_s3_bucket_ownership_controls" "hollo_backup" {
+  bucket = aws_s3_bucket.hollo_backup.id
+
+  rule {
+    object_ownership = "BucketOwnerEnforced"
+  }
+}
+
+resource "aws_s3_bucket_lifecycle_configuration" "hollo_backup" {
+  bucket = aws_s3_bucket.hollo_backup.id
+
+  rule {
+    id     = "hollo-backup-lifecycle"
+    status = "Enabled"
+
+    filter {
+      prefix = ""
+    }
+
+    transition {
+      days          = 30
+      storage_class = "DEEP_ARCHIVE"
+    }
+
+    noncurrent_version_transition {
+      noncurrent_days = 30
+      storage_class   = "DEEP_ARCHIVE"
+    }
+
+    noncurrent_version_expiration {
+      noncurrent_days = 60
+    }
+
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 1
+    }
+  }
+}
+
 resource "aws_iam_user" "terraform" {
   name = "terraform"
 }
@@ -80,6 +150,13 @@ resource "aws_iam_access_key" "immich_backup" {
   user = aws_iam_user.immich_backup.name
 }
 
+resource "aws_iam_user" "hollo_backup" {
+  name = "hollo-backup"
+}
+
+resource "aws_iam_access_key" "hollo_backup" {
+  user = aws_iam_user.hollo_backup.name
+}
 
 resource "aws_iam_user" "kazuki" {
   name = "kazuki"
@@ -124,7 +201,7 @@ data "aws_iam_policy_document" "terraform_execution" {
       "s3:DeleteBucketOwnershipControls",
     ]
 
-    resources = [aws_s3_bucket.immich_backup.arn]
+    resources = [aws_s3_bucket.immich_backup.arn, aws_s3_bucket.hollo_backup.arn]
   }
 
   statement {
@@ -140,7 +217,7 @@ data "aws_iam_policy_document" "terraform_execution" {
       "s3:ListBucket",
     ]
 
-    resources = ["${aws_s3_bucket.immich_backup.arn}/*"]
+    resources = ["${aws_s3_bucket.immich_backup.arn}/*", "${aws_s3_bucket.hollo_backup.arn}/*"]
   }
 
   statement {
@@ -197,4 +274,37 @@ resource "aws_iam_user_policy" "immich_backup_s3" {
   name   = "immich-backup-s3"
   user   = aws_iam_user.immich_backup.name
   policy = data.aws_iam_policy_document.immich_backup_s3.json
+}
+
+data "aws_iam_policy_document" "hollo_backup_s3" {
+  statement {
+    sid = "AllowS3BucketListing"
+
+    actions = [
+      "s3:ListBucket",
+      "s3:ListBucketMultipartUploads",
+    ]
+
+    resources = [aws_s3_bucket.hollo_backup.arn]
+  }
+
+  statement {
+    sid = "AllowS3ObjectReadWriteAndMultipart"
+
+    actions = [
+      "s3:GetObject",
+      "s3:PutObject",
+      "s3:DeleteObject",
+      "s3:AbortMultipartUpload",
+      "s3:ListMultipartUploadParts",
+    ]
+
+    resources = ["${aws_s3_bucket.hollo_backup.arn}/*"]
+  }
+}
+
+resource "aws_iam_user_policy" "hollo_backup_s3" {
+  name   = "hollo-backup-s3"
+  user   = aws_iam_user.hollo_backup.name
+  policy = data.aws_iam_policy_document.hollo_backup_s3.json
 }
