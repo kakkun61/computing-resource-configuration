@@ -23,6 +23,27 @@ immich:
 
 valkey:
   enabled: true
+  controllers:
+    main:
+      containers:
+        main:
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              memory: 256Mi
+      pod:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: kubernetes.io/arch
+                      operator: In
+                      values:
+                        - amd64
+                        - arm64
   persistence:
     data:
       type: persistentVolumeClaim
@@ -33,6 +54,14 @@ valkey:
 server:
   controllers:
     main:
+      containers:
+        main:
+          resources:
+            requests:
+              cpu: 200m
+              memory: 512Mi
+            limits:
+              memory: 2Gi
       pod:
         affinity:
           nodeAffinity:
@@ -74,6 +103,14 @@ server:
 machine-learning:
   controllers:
     main:
+      containers:
+        main:
+          resources:
+            requests:
+              cpu: 200m
+              memory: 512Mi
+            limits:
+              memory: 3Gi
       pod:
         affinity:
           nodeAffinity:

@@ -80,6 +80,12 @@ spec:
               value: postgres://miniflux:$(DATABASE_PASSWORD)@database-rw/miniflux?sslmode=disable
             - name: RUN_MIGRATIONS
               value: "1"
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              memory: 256Mi
 ---
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
