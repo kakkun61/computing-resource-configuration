@@ -23,6 +23,39 @@ spec:
                 port:
                   number: 3000
 ---
+# /proxy（MEDIA_PROXY）のレスポンスに CORS ヘッダーを付与する。
+# 認証不要の公開メディアなので Access-Control-Allow-Origin: * でよい。
+# 付けないと Phanpy など crossorigin="anonymous" で img を読み込むクライアントでアイコン等が表示されない。
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: proxy-cors
+  namespace: hollo
+spec:
+  headers:
+    customResponseHeaders:
+      Access-Control-Allow-Origin: "*"
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hollo-proxy
+  namespace: hollo
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: hollo-proxy-cors@kubernetescrd
+spec:
+  rules:
+    - host: ap.kakkun61.com
+      http:
+        paths:
+          - path: /proxy
+            pathType: Prefix
+            backend:
+              service:
+                name: hollo
+                port:
+                  number: 3000
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -104,6 +137,8 @@ spec:
             - name: WEB_ORIGIN
               value: "https://ap.kakkun61.com"
             ## 追加機能 https://docs.hollo.social/ja/install/env/#追加機能
+            - name: MEDIA_PROXY
+              value: "proxy"
             ## メディアストレージ https://docs.hollo.social/ja/install/env/#メディアストレージ
             - name: DRIVE_DISK
               value: "fs"

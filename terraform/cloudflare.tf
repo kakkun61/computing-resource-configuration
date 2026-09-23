@@ -358,7 +358,20 @@ resource "cloudflare_zero_trust_tunnel_cloudflared_config" "home" {
 
     ingress_rule {
       hostname = "ap.${var.domain}"
-      service  = "http://localhost:80"
+      # Traefik の websecure（TLS 終端）エントリーポイントへ向ける。
+      # web（HTTP）エントリーポイント経由だと、Hollo（BEHIND_PROXY=true）が
+      # X-Forwarded-Proto を頼りに自己参照 URL の scheme を決めるため、
+      # その信頼設定が必要になり少々セキュアでなくなる（Traefik の手前に立つ k3s の
+      # ServiceLB がクライアント IP を保持しないため、送信元 IP による
+      # 信頼判定が機能しない）。TLS を Traefik 自身に終端させれば、
+      # scheme の判定にヘッダーの信頼が不要になる。
+      service = "https://localhost:443"
+
+      origin_request {
+        # Traefik の websecure エントリーポイントはデフォルトの自己署名証明書を
+        # 使っており、localhost 宛の接続を公的 CA で検証できないため無効化する。
+        no_tls_verify = true
+      }
     }
 
     ingress_rule {
