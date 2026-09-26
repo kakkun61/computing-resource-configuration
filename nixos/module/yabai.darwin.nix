@@ -92,7 +92,7 @@ let
       window_id="''${YABAI_WINDOW_ID:?}"
 
       # launchd 経由だと標準出力・標準エラー出力がどこにも残らないので、
-      # 自前でログファイルに追記する（原因調査用。落ち着いたら消してよい）
+      # 自前でログファイルに追記する
       log_file="$HOME/Library/Logs/yabai-assign-space.log"
       mkdir -p "$(dirname "$log_file")"
       exec >> "$log_file" 2>&1
@@ -198,9 +198,8 @@ let
       [ "$n" -gt 1 ] && assign_label="''${current_slot_label}-''${n}"
       echo "割り当てラベル: $assign_label (このスロットの既存メンバー数: $((n - 1)))"
 
-      # 自分より後ろのスロットを順に見て、今すでに実在する（＝スペースとして
-      # 作られている）最初のものの直前に挿入する。--move は存在しないラベルを
-      # 指定するとエラーになるので、単に「次のスロット」を使うだけでは駄目
+      # 自分より後ろのスロットを順に見て、今すでに実在する
+      # 最初のものの直前に挿入する
       insert_before_slot_label=last
       for ((j = slot_index + 1; j < ''${#order[@]}; j++))
       do
