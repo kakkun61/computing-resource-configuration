@@ -49,6 +49,7 @@
 
         darwinModules = {
           common = import ./module/common.darwin.nix;
+          yabai = import ./module/yabai.darwin.nix;
         };
 
         nixosConfigurations = {
