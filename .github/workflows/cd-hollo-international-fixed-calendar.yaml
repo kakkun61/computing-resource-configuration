@@ -4,20 +4,20 @@ on:
     branches:
       - release-*
     paths:
-      - 'kubernetes/mixi2-international-fixed-calendar/**'
-      - '.github/workflows/cd-mixi2-international-fixed-calendar.yaml'
+      - 'kubernetes/hollo-international-fixed-calendar/**'
+      - '.github/workflows/cd-hollo-international-fixed-calendar.yaml'
     tags:
-      - release-mixi2-international-fixed-calendar-*
+      - release-hollo-international-fixed-calendar-*
 
 env:
   REGISTRY: ghcr.io
 
 jobs:
-  build-mixi2-international-fixed-calendar-image:
+  build-hollo-international-fixed-calendar-image:
     runs-on: ubuntu-latest
 
     env:
-      IMAGE_NAME: mixi2-international-fixed-calendar
+      IMAGE_NAME: hollo-international-fixed-calendar
 
     permissions:
       contents: read
@@ -48,7 +48,7 @@ jobs:
         id: push
         uses: docker/build-push-action@v7
         with:
-          context: kubernetes/mixi2-international-fixed-calendar
+          context: kubernetes/hollo-international-fixed-calendar
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

@@ -1,0 +1,8 @@
+github.com/gorilla/websocket v1.5.3 h1:saDtZ6Pbx/0u+bgYQ3q96pZgCzfhKXGPqt7kZ72aNNg=
+github.com/gorilla/websocket v1.5.3/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
+github.com/kakkun61/go-international-fixed-calendar v0.0.0 h1:Nf5ae4/eaHSJZwbjzqPR/abL+5UdqT/XFBi7Y31XH0g=
+github.com/kakkun61/go-international-fixed-calendar v0.0.0/go.mod h1:HVikuacNF8mWr2ynju3kqV7pzDwlux/3KUXi8f2SH9g=
+github.com/mattn/go-mastodon v0.0.13 h1:ZQaij7lw7N81KuqbYJeTMSfsO53GZETpi1mXcxsuYIQ=
+github.com/mattn/go-mastodon v0.0.13/go.mod h1:9ljK/rR6veDDzO3z2IdUYDBpATgi0cXotDacI3yK+jM=
+github.com/tomnomnom/linkheader v0.0.0-20250811210735-e5fe3b51442e h1:tD38/4xg4nuQCASJ/JxcvCHNb46w0cdAaJfkzQOO1bA=
+github.com/tomnomnom/linkheader v0.0.0-20250811210735-e5fe3b51442e/go.mod h1:krvJ5AY/MjdPkTeRgMYbIDhbbbVvnPQPzsIsDJO8xrY=

@@ -74,8 +74,10 @@ words:
   - lessopen
   - lesspipe
   - libpam
+  - linkheader
   - macskk
   - maihama
+  - mattn
   - mdns
   - miniflux
   - mixi
@@ -134,6 +136,7 @@ words:
   - tailnet
   - tensorchord
   - thefuck
+  - tomnomnom
   - traefik
   - treefmt
   - usbhid

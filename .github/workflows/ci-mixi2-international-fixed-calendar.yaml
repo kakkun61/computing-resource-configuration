@@ -2,9 +2,9 @@ on:
   push:
     branches:
       - master
+    paths:
       - 'kubernetes/mixi2-international-fixed-calendar/**'
       - '.github/workflows/ci-mixi2-international-fixed-calendar.yaml'
-    paths:
   pull_request:
     paths:
       - 'kubernetes/mixi2-international-fixed-calendar/**'

@@ -1,0 +1,32 @@
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'kubernetes/hollo-international-fixed-calendar/**'
+      - '.github/workflows/ci-hollo-international-fixed-calendar.yaml'
+  pull_request:
+    paths:
+      - 'kubernetes/hollo-international-fixed-calendar/**'
+      - '.github/workflows/ci-hollo-international-fixed-calendar.yaml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    defaults:
+      run:
+        working-directory: kubernetes/hollo-international-fixed-calendar
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: kubernetes/hollo-international-fixed-calendar/go.mod
+          cache-dependency-path: kubernetes/hollo-international-fixed-calendar/go.sum
+
+      - run: go build ./...
