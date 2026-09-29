@@ -5,6 +5,7 @@ on:
       - release-*
     paths:
       - 'kubernetes/mixi2-international-fixed-calendar/**'
+      - '.github/workflows/cd-mixi2-international-fixed-calendar.yaml'
     tags:
       - release-*
 
