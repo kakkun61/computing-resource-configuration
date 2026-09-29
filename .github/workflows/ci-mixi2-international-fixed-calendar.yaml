@@ -1,0 +1,32 @@
+on:
+  push:
+    branches:
+      - master
+      - 'kubernetes/mixi2-international-fixed-calendar/**'
+      - '.github/workflows/ci-mixi2-international-fixed-calendar.yaml'
+    paths:
+  pull_request:
+    paths:
+      - 'kubernetes/mixi2-international-fixed-calendar/**'
+      - '.github/workflows/ci-mixi2-international-fixed-calendar.yaml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    defaults:
+      run:
+        working-directory: kubernetes/mixi2-international-fixed-calendar
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: kubernetes/mixi2-international-fixed-calendar/go.mod
+          cache-dependency-path: kubernetes/mixi2-international-fixed-calendar/go.sum
+
+      - run: go build ./...
