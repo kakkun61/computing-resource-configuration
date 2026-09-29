@@ -80,6 +80,7 @@
           devShells.default = pkgs.mkShell {
             packages = with pkgs; [
               awscli2
+              go
               nodejs
               terraform
             ];

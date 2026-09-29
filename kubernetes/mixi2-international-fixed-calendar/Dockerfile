@@ -9,8 +9,9 @@ ARG TARGETVARIANT
 
 WORKDIR /workspace
 
-RUN git clone https://github.com/kakkun61/mixi2-international-fixed-calendar.git . && \
-    go mod download
+COPY go.mod go.sum main.go ./
+
+RUN go mod download
 
 RUN case "$TARGETARCH" in \
       "arm") \
