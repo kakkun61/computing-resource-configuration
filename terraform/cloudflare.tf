@@ -144,9 +144,27 @@ resource "cloudflare_record" "ap" {
   proxied = true
 }
 
+resource "cloudflare_record" "filestash" {
+  zone_id = var.cloudflare_zone_id
+  name    = "filestash"
+  type    = "CNAME"
+  content = "${cloudflare_zero_trust_tunnel_cloudflared.home.id}.cfargotunnel.com"
+  ttl     = 1
+  proxied = true
+}
+
 resource "cloudflare_record" "immich_local" {
   zone_id = var.cloudflare_zone_id
   name    = "immich.local"
+  type    = "A"
+  content = "192.168.11.52"
+  ttl     = 1
+  proxied = false
+}
+
+resource "cloudflare_record" "filestash_local" {
+  zone_id = var.cloudflare_zone_id
+  name    = "filestash.local"
   type    = "A"
   content = "192.168.11.52"
   ttl     = 1
@@ -372,6 +390,11 @@ resource "cloudflare_zero_trust_tunnel_cloudflared_config" "home" {
         # 使っており、localhost 宛の接続を公的 CA で検証できないため無効化する。
         no_tls_verify = true
       }
+    }
+
+    ingress_rule {
+      hostname = "filestash.${var.domain}"
+      service  = "http://localhost:80"
     }
 
     ingress_rule {

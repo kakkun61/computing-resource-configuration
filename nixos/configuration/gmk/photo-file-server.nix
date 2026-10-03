@@ -23,8 +23,12 @@
 
     nfs.server = {
       enable = true;
+      # filestash の配置されるノードが増えたら追記する
+      # gmk ノードからは rw
       exports = ''
-        /mnt/usb-raid/photos *(ro,sync,no_subtree_check,no_root_squash)
+        /mnt/usb-raid/photos \
+          192.168.11.52(rw,sync,no_subtree_check,no_root_squash) \
+          *(ro,sync,no_subtree_check,no_root_squash)
       '';
     };
   };

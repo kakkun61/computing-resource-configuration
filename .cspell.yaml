@@ -44,6 +44,7 @@ words:
   - esac
   - extglob
   - fedify
+  - filestash
   - fmask
   - frontmost
   - ghcman
