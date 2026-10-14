@@ -20,7 +20,7 @@
 別マシンで、このリポジトリーに `my-machine-name` 用の設定を追加する。
 
 - セットアップ対象のマシンの _/etc/nixos/configuration.nix_ を元に _configuration/my-machine-name.nix_ を作成する。/ Create _configuration/my-machine-name.nix_ based on _/etc/nixos/configuration.nix_ of the target machine.
-- _flake.nix_ の `nixosConfigurations` に `my-machine-name` を追加する。/ Add `my-machine-name` to `nixosConfigurations` in _flake.nix_.
+- _flake-module.nix_ の `nixosConfigurations` に `my-machine-name` を追加する。/ Add `my-machine-name` to `nixosConfigurations` in _flake-module.nix_.
 
 ```nix
 …
@@ -30,7 +30,7 @@
       system = …;
       modules = [
         ./hardware-configuration.nix
-        self.nixosModules.common
+        nixosModules.common
         ./configuration/my-machine-name.nix
         { system.stateVersion = …; }
       ];

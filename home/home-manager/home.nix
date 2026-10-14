@@ -125,9 +125,6 @@
       };
       gh = {
         enable = true;
-        extensions = [
-          pkgs.gh-copilot
-        ];
         gitCredentialHelper.enable = true;
       };
       git = {

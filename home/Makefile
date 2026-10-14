@@ -40,12 +40,12 @@ tmux/%: result/home-files/.config/tmux/% .out/autogen-note.txt
 # 下記を手動で実行しよう
 .PHONY: build-generation
 build-generation:
-	home-manager build --flake .#test-$$(nix eval --impure --expr 'builtins.currentSystem')
+	home-manager build --flake ..#test-$$(nix eval --impure --expr 'builtins.currentSystem')
 
 .PHONY: home-manager-build
 home-manager-build:
-	home-manager build --flake ".#$$(hostname)"
+	home-manager build --flake "..#$$(hostname)"
 
 .PHONY: home-manager-switch
 home-manager-switch:
-	home-manager switch --flake ".#$$(hostname)"
+	home-manager switch --flake "..#$$(hostname)"
