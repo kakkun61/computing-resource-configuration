@@ -95,6 +95,17 @@
                 { home.stateVersion = "24.05"; }
               ];
             };
+            maihama-wsl = home-manager.lib.homeManagerConfiguration {
+              pkgs = import nixpkgs {
+                system = "x86_64-linux";
+                config.allowUnfree = true;
+              };
+              modules = [
+                self.homeModules.default
+                ./home-manager/configuration/maihama-wsl.nix
+                { home.stateVersion = "24.05"; }
+              ];
+            };
             # ファイル生成用・テスト用の設定
             test-x86_64-linux = mkTestConfiguration "x86_64-linux";
             test-aarch64-darwin = mkTestConfiguration "aarch64-darwin";

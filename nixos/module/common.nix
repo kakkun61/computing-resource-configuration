@@ -19,6 +19,8 @@
 
     programs.nix-ld.enable = true;
 
+    environment.localBinInPath = true;
+
     users = {
       defaultUserShell = pkgs.bashInteractive;
 

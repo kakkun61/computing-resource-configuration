@@ -77,6 +77,16 @@
               { system.stateVersion = "25.05"; }
             ];
           };
+          maihama-wsl = nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+            modules = [
+              self.nixosModules.common
+              self.nixosModules.wsl
+              self.nixosModules.docker
+              ./configuration/maihama-wsl.nix
+              { system.stateVersion = "25.05"; }
+            ];
+          };
           utm = nixpkgs.lib.nixosSystem {
             system = "aarch64-linux";
             modules = [
