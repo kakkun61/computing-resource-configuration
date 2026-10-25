@@ -60,7 +60,7 @@ spec:
   affinity:
     nodeSelector:
       kubernetes.io/hostname: gmk
-  imageName: ghcr.io/tensorchord/cloudnative-vectorchord:16.9-0.4.3
+  imageName: ghcr.io/tensorchord/cloudnative-vectorchord:16.15-1.1.1
   postgresql:
     shared_preload_libraries:
       - "vchord.so"
