@@ -44,6 +44,7 @@
           secret = import ./module/secret.nix;
           sshd = import ./module/sshd.nix;
           tailscale = import ./module/tailscale.nix;
+          usbip = import ./module/usbip.nix;
           wsl = import ./module/wsl.nix { inherit nixos-wsl; };
         };
 
@@ -62,6 +63,7 @@
               self.nixosModules.kubernetes
               self.nixosModules.tailscale
               self.nixosModules.cloudflare-tunnel-home
+              self.nixosModules.usbip
               ./configuration/gmk.nix
               { system.stateVersion = "25.05"; }
             ];
