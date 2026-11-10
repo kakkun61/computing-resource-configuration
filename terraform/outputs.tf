@@ -6,7 +6,7 @@ output "dns_records_summary" {
     total_cname_records = 14
     total_mx_records    = 5
     total_ns_records    = 4
-    total_txt_records   = 7
+    total_txt_records   = 8
   }
 }
 

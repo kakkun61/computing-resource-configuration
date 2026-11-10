@@ -302,6 +302,15 @@ resource "cloudflare_record" "atproto" {
   proxied = false
 }
 
+resource "cloudflare_record" "fedidb_verify" {
+  zone_id = var.cloudflare_zone_id
+  name    = "_fedidb-verify"
+  type    = "TXT"
+  content = "fedidb-verify=olfwgld72uddnmyxsrnf7py15fcsjw5kbuqkta21"
+  ttl     = 1
+  proxied = false
+}
+
 resource "cloudflare_record" "dmarc_1" {
   zone_id = var.cloudflare_zone_id
   name    = "_dmarc"
