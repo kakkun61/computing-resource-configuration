@@ -125,6 +125,7 @@
       };
       gh = {
         enable = true;
+        extensions = with pkgs; [ gh-stack ];
         gitCredentialHelper.enable = true;
       };
       git = {
