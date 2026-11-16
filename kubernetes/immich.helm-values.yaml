@@ -111,6 +111,8 @@ machine-learning:
               memory: 512Mi
             limits:
               memory: 3Gi
+          env:
+            MACHINE_LEARNING_MODEL_REVISION: "v2"
       pod:
         affinity:
           nodeAffinity:
