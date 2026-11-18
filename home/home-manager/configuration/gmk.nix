@@ -13,6 +13,7 @@
         btop
         kubernetes-helm
         vscode-cli
+        wd
       ];
       sessionPath = [
         "$HOME/.local/bin"
