@@ -1,7 +1,27 @@
 version: 2
 updates:
   - package-ecosystem: gomod
-    directory: /
+    directories:
+      - /kubernetes/hollo-international-fixed-calendar
+      - /kubernetes/mixi2-international-fixed-calendar
+    schedule:
+      interval: weekly
+  # Dockerfile と Kubernetes マニフェストのイメージ
+  - package-ecosystem: docker
+    directories:
+      - /kubernetes
+      - /kubernetes/hollo-international-fixed-calendar
+      - /kubernetes/mixi2-international-fixed-calendar
+    schedule:
+      interval: weekly
+    ignore:
+      - dependency-name: "*international-fixed-calendar"
+  - package-ecosystem: terraform
+    directory: /terraform
+    schedule:
+      interval: weekly
+  - package-ecosystem: npm
+    directory: /home
     schedule:
       interval: weekly
   - package-ecosystem: github-actions
