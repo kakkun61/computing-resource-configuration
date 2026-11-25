@@ -9,6 +9,6 @@
     "cspell": "cspell \"**\""
   },
   "devDependencies": {
-    "cspell": "^9"
+    "cspell": "^10"
   }
 }
