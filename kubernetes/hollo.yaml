@@ -103,7 +103,7 @@ spec:
     spec:
       containers:
         - name: hollo
-          image: ghcr.io/fedify-dev/hollo:0.9.18
+          image: ghcr.io/fedify-dev/hollo:0.9.26
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000
