@@ -4,7 +4,7 @@ go 1.25.0
 
 require (
 	github.com/kakkun61/go-international-fixed-calendar v0.0.0
-	github.com/mixigroup/mixi2-application-sdk-go v1.0.0
+	github.com/mixigroup/mixi2-application-sdk-go v1.2.0
 	google.golang.org/grpc v1.83.2
 )
 
