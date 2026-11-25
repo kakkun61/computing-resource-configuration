@@ -19,7 +19,7 @@ spec:
             kubernetes.io/arch: amd64
           containers:
             - name: hollo-media-backup
-              image: nixos/nix:2.32.8
+              image: nixos/nix:2.36.0
               imagePullPolicy: IfNotPresent
               envFrom:
                 - secretRef:
